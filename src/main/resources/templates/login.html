@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        .failed{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome to Login Page</h2>
+    <form action = "#" th:action ="@{/authenticateTheUser}" method = "post">
+
+        <!--Custom error Checking -->
+        <div th:if="${param.error}">
+                <i class = "failed">opps wrong username or password</i>
+        </div>
+        <p>
+            Username : <input placeholder="Enter username" type = "text" name = "email">
+        </p>
+        <p>
+            Password : <input placeholder="Enter user password" type ="text" name ="password">
+        </p>
+        <input type ="submit" value = "login"/>
+    </form>
+</body>
+</html>
