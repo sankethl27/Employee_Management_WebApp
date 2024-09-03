@@ -31,6 +31,16 @@ public class Employee {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department departmentId;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @ManyToOne
+    @JoinColumn(name = "team_lead_id") // Ensure this column exists if using this relation
+    private TeamLead teamLead;
+
+    // Getters and Setters
+
 
     //Constructors
 
@@ -38,13 +48,15 @@ public class Employee {
 
     }
 
-    public Employee(int id, String firstName, String lastName, String email, String phoneNo, Department departmentId) {
+    public Employee(int id, String firstName, String lastName, String email, String phoneNo, Department departmentId, Project project, TeamLead teamLead) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNo = phoneNo;
         this.departmentId = departmentId;
+        this.project = project;
+        this.teamLead = teamLead;
     }
 
     public int getId() {
@@ -95,7 +107,21 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
+    public Project getProject() {
+        return project;
+    }
 
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public TeamLead getTeamLead() {
+        return teamLead;
+    }
+
+    public void setTeamLead(TeamLead teamLead) {
+        this.teamLead = teamLead;
+    }
 
     @Override
     public String toString() {
