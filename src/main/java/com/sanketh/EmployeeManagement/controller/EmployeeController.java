@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/api")
+
 @RestController
 public class EmployeeController {
 
@@ -20,12 +20,6 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService){
         this.employeeService = employeeService;
     }
-
-    @RequestMapping("/api")
-    public String helloWorld(){
-        return "Welcome to Employee Management";
-    }
-
     @GetMapping("/employee")
     public List<Employee> findAll(){
         return employeeService.findAll();

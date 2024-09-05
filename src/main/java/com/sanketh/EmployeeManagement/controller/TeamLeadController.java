@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 public class TeamLeadController {
     TeamLeadService teamLeadService;
 
@@ -18,7 +17,6 @@ public class TeamLeadController {
     public TeamLeadController(TeamLeadService teamLeadService){
         this.teamLeadService = teamLeadService;
     }
-
 
     @GetMapping("/teamLead")
     public List<TeamLead> findAll(){
