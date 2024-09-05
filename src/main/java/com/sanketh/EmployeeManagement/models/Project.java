@@ -3,6 +3,7 @@ package com.sanketh.EmployeeManagement.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
@@ -25,6 +26,7 @@ public class Project {
     private TeamLead teamLead;
 
     @OneToMany(mappedBy = "project")
+    @JsonManagedReference
     private List<Employee> employees;
 
 

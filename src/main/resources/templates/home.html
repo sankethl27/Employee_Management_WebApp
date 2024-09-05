@@ -1,13 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+
+    <style>
+        table,th,td{
+            border  : 1px solid black;
+            text-align : center;
+            margin : 10px;
+            border-collapse : collapse;
+            padding : 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to Employee Management</h1>
-    <p>Display all Employees here in table</p>
-<!--    <p>New user : <button type = "button">SignUp</button></p>-->
-<!--    <p>Have an account already : <button type = "button">login</button></p>-->
+
+
+    <table class = "EmployyeDetails" >
+        <tr>
+            <th>Employee_Name</th>
+            <th>Roles</th>
+        </tr>
+        <tr>
+            <td><span sec:authentication="principal.username"></span></td>
+            <td> <span sec:authentication="principal.authorities"></span></td>
+        </tr>
+    </table>
+
+<!--Add a link to Display all Employees here-->
+    <p>
+        <a th:href ="@{/employee/teamLead}">List of Employees</a>
+        (ONLY FOR TEAM LEADS)
+    </p>
+    <p>
+        <a th:href ="@{/systems}">ADMIN STUFF</a>
+        (ONLY For ADMINS )
+    </p>
+
+
+
+
+        </table>
+<!--    Display logout button here-->
+    <form action = "#" th:action = "@{/logout}" method = "POST">
+        <button type = "submit">Logout</button>
+    </form>
+
 </body>
 </html>

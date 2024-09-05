@@ -33,6 +33,7 @@ public class TeamLead {
     private Department department;
 
     @OneToMany(mappedBy = "teamLead")
+    @JsonManagedReference
     private List<Employee> employees;
 
     @OneToMany(mappedBy = "teamLead")

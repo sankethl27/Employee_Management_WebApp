@@ -5,6 +5,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -84,18 +85,55 @@ import javax.sql.DataSource;
 public class SecurityConfig{
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails sanketh = User.builder()
-                .username("sanketh")
-                .password("{noop}test123")
-                .roles("TEAMLEAD","EMPLOYEE","ADMIN")
-                .build();
+    public UserDetailsManager userDetailsManager(DataSource dataSource){
+            JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 
-        UserDetails vivek = User.builder()
-                .username("vivek")
-                .password("{noop}test123")
-                .roles("EMPLOYEE")
-                .build();
-        return new InMemoryUserDetailsManager(sanketh , vivek);
+
+            //define query to retrieve a user by username
+            jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT  USERNAME ,PASSWORD ,ENABLED FROM PASSWORDS WHERE USERNAME= ?");
+
+            //define query to retreive authorities/roles by username
+            jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT USERNAME, AUTHORITY FROM AUTHORITIES WHERE USERNAME =?");
+
+            return jdbcUserDetailsManager;
     }
+
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsManager(){
+//        UserDetails sanketh = User.builder()
+//                .username("sanketh")
+//                .password("{noop}test123")
+//                .roles("TEAMLEAD","EMPLOYEE","ADMIN")
+//
+//                .build();
+//
+//        UserDetails vivek = User.builder()
+//                .username("vivek")
+//                .password("{noop}test123")
+//                .roles("EMPLOYEE")
+//                .build();
+//        return new InMemoryUserDetailsManager(sanketh , vivek);
+//    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http
+                .authorizeHttpRequests(config ->
+                        config
+                                .requestMatchers("/").hasRole("EMPLOYEE")
+                                .requestMatchers("/employee").hasRole("TEAM_LEAD")
+                                .anyRequest().authenticated()
+                )
+                .formLogin(form->
+                        form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/authenticateTheUser")
+                                .permitAll()
+                )
+                .logout(logout->logout.permitAll());
+
+        return http.build();
+
+    }
+
 }

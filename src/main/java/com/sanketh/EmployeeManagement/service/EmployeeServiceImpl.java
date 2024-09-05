@@ -51,4 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
         return employee;
     }
+
+    @Override
+    public Optional<Employee> getEmployeesByLoggedInTeamLead(int teamLeadId) {
+        return employeeRepository.findById(teamLeadId);
+    }
 }
