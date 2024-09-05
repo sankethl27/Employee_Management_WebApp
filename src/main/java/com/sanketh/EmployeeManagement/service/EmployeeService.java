@@ -15,5 +15,7 @@ public interface EmployeeService {
 
     Employee findById(int id);
 
+    Optional<Employee> getEmployeesByLoggedInTeamLead(int teamLead);
+
 
 }

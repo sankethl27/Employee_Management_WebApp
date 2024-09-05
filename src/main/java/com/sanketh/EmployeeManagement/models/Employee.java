@@ -1,6 +1,7 @@
 package com.sanketh.EmployeeManagement.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 
@@ -31,12 +32,14 @@ public class Employee {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department departmentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_lead_id") // Ensure this column exists if using this relation
+    @JsonBackReference
     private TeamLead teamLead;
 
     // Getters and Setters

@@ -17,8 +17,13 @@
         <div th:if="${param.error}">
                 <i class = "failed">opps wrong username or password</i>
         </div>
+
+        <!--Check for logout-->
+        <div th:if="${param.logout}">
+            <i>You have been logged out</i>
+        </div>
         <p>
-            Username : <input placeholder="Enter username" type = "text" name = "email">
+            Username : <input placeholder="Enter username" type = "text" name = "username">
         </p>
         <p>
             Password : <input placeholder="Enter user password" type ="text" name ="password">
