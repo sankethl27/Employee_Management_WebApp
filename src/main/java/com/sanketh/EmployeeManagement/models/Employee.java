@@ -13,7 +13,7 @@ public class Employee {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "first_name")
@@ -22,8 +22,8 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username")
+    public String username;
 
     @Column(name = "phone_number")
     private String phoneNo;
@@ -47,15 +47,15 @@ public class Employee {
 
     //Constructors
 
-    public Employee(){
+    public Employee() {
 
     }
 
-    public Employee(int id, String firstName, String lastName, String email, String phoneNo, Department departmentId, Project project, TeamLead teamLead) {
+    public Employee(int id, String firstName, String lastName, String username, String phoneNo, Department departmentId, Project project, TeamLead teamLead) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.phoneNo = phoneNo;
         this.departmentId = departmentId;
         this.project = project;
@@ -87,11 +87,11 @@ public class Employee {
     }
 
     public String getEmail() {
-        return email;
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String username) {
+        this.username = username;
     }
 
     public String getPhoneNo() {
@@ -132,7 +132,7 @@ public class Employee {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", LastName='" + lastName + '\'' +
-                ", Email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 ", PhoneNo='" + phoneNo + '\'' +
                 ", departmentId=" + departmentId +
                 '}';

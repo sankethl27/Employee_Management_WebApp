@@ -18,7 +18,6 @@ public class RootController {
 
 
     private final EmployeeService employeeService;
-    private Model model;
     @Autowired
     public RootController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -41,17 +40,20 @@ public class RootController {
 
     //Get Employees Under a particular Team Lead
     @GetMapping("employee/teamLead")
-    public String getEmployeesForLoggedInTeamLead(){
+    public String getEmployeesForLoggedInTeamLead(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String userName = userDetails.getUsername();
-        String passWord = userDetails.getPassword();
-//        List<String> UD = new java.util.ArrayList<>(List.of());
-//        UD.add(userName);
-//        UD.add(passWord);
+        System.out.println("username is : " + userDetails.getUsername());
+        System.out.println("Authorities are : " + userDetails.getAuthorities());
+        String username = userDetails.getUsername();
 
-//        Optional<Employee> employees =  employeeService.getEmployeesByLoggedInTeamLead(teamLeadId);
-        model.addAttribute("employees",userName);
-        return "employee";
+        Optional<List<Employee>> employeesOpt =  employeeService.getEmployeesByLoggedInTeamLead(username);
+        if (employeesOpt.isPresent()) {
+            List<Employee> employees = employeesOpt.get();
+            model.addAttribute("employees", employees);
+        } else {
+            model.addAttribute("message", "No employees found.");
+        }
+        return "employees";
     }
 }
